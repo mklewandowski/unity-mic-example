@@ -11,6 +11,7 @@ Use the following steps to run locally:
 This repo has been tested for use on the following platforms:
 - Windows PC
 - Android
+- iOS
 
 ## Android Settings
 To get permission to access device features or data outside of your Unity application’s sandbox, there are two stages:
@@ -24,6 +25,11 @@ https://docs.unity3d.com/Manual/android-permissions-in-unity.html#unity-handled-
 More information on Android permissions here:
 
 https://docs.unity3d.com/Manual/android-permissions-in-unity.html
+
+## iOS Settings
+To get permission to access the microphone on iOS, the following is required:
+- specify a "microphone usage description" in the build settings.
+- At runtime, request permission from the user.
 
 ## Development Tools
 - Created using Unity 2021.3.3f.1
