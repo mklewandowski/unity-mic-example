@@ -34,3 +34,23 @@ To get permission to access the microphone on iOS, the following is required:
 ## Development Tools
 - Created using Unity 2021.3.3f.1
 - Code edited using Visual Studio Code.
+
+## Credits and Links
+Unity forum discussion on accessing mic volume:
+https://forum.unity.com/threads/check-current-microphone-input-volume.133501/
+
+Unity forum discussion on converting to decibels:
+https://answers.unity.com/questions/157940/getoutputdata-and-getspectrumdata-they-represent-t.html?childToView=158800#answer-158800
+
+Stack Overflow discussion on accessing mic decibels:
+https://stackoverflow.com/questions/53030560/read-microphone-decibels-and-pitch-frequency
+
+More on decibel range:
+https://stackoverflow.com/questions/68099946/why-is-the-volume-coming-from-80db-to-0-not-even-starting-at-0
+
+Understanding 0 decibels:
+https://www.quora.com/In-sound-measurement-0-dB-is-the-threshold-of-hearing-but-why-in-digital-audio-mixers-or-in-amplifiers-0-dB-is-referred-as-Maximum-loudness
+https://dsp.stackexchange.com/questions/69668/whats-the-minimum-decibel-value
+
+Example project:
+https://github.com/devSoyoung/unity-decibel-checker
