@@ -7,14 +7,19 @@ using UnityEngine.Android;
 
 public class MicInput : MonoBehaviour
 {
-    public static float MicLoudness;
+    public static float MicLoudnessSquared;
+    public static float MicLoudnessPos;
 
     private string _device;
 
     [SerializeField]
-    TextMeshProUGUI LoudnessText;
+    TextMeshProUGUI LoudnessPosText;
     [SerializeField]
-    TextMeshProUGUI DecibelText;
+    TextMeshProUGUI LoudnessSquaredText;
+    [SerializeField]
+    TextMeshProUGUI DecibelPosText;
+    [SerializeField]
+    TextMeshProUGUI DecibelSquaredText;
 
     float levelTimer = 0;
     float levelTimerMax = .1f;
@@ -42,39 +47,55 @@ public class MicInput : MonoBehaviour
     int _sampleWindow = 128;
 
     //get data from microphone into audioclip
-    float  LevelMax()
+    void LevelMax()
     {
-        float levelMax = 0;
+        float levelMaxSq = 0;
+        float levelMaxPos = 0;
         float[] waveData = new float[_sampleWindow];
         int micPosition = Microphone.GetPosition(null) - (_sampleWindow + 1); // null means the first microphone
-        if (micPosition < 0) return 0;
+        if (micPosition < 0)
+        {
+            MicLoudnessSquared = 0;
+            MicLoudnessPos = 0;
+            return;
+        }
         _clipRecord.GetData(waveData, micPosition);
         // Getting a peak on the last 128 samples
         for (int i = 0; i < _sampleWindow; i++)
         {
-            float wavePeak = waveData[i] * waveData[i];
-            if (levelMax < wavePeak)
+            float wavePeakSq = waveData[i] * waveData[i];
+            float wavePeakPos = waveData[i] < 0 ? waveData[i] * -1f : waveData[i];
+            if (levelMaxSq < wavePeakSq)
             {
-                levelMax = wavePeak;
+                levelMaxSq = wavePeakSq;
+            }
+            if (levelMaxPos < wavePeakPos)
+            {
+                levelMaxPos = wavePeakPos;
             }
         }
-        Debug.Log(levelMax);
-        return levelMax;
+        MicLoudnessSquared = levelMaxSq;
+        MicLoudnessPos = levelMaxPos;
+        Debug.Log("levelMaxSq: " + levelMaxSq.ToString("F2"));
+        Debug.Log("levelMaxPos: " + levelMaxPos.ToString("F2"));
     }
 
     void Update()
     {
         // levelMax equals to the highest normalized value power 2, a small number because < 1
-        // pass the value to a static var so we can access it from anywhere
-        MicLoudness = LevelMax();
+        LevelMax();
 
         levelTimer -= Time.deltaTime;
         if (levelTimer <= 0)
         {
-            //MicLoudness = Mathf.Max(.00001f, MicLoudness);
-            LoudnessText.text = "Mic loudness: " + MicLoudness.ToString();
-            float db = 20 * Mathf.Log10(Mathf.Abs(MicInput.MicLoudness));
-            DecibelText.text = "Decibels: " + db.ToString();
+            LoudnessSquaredText.text = "Mic loudness (0 to 1): " + MicLoudnessSquared.ToString("F3");
+            float db = 20 * Mathf.Log10(Mathf.Abs(MicInput.MicLoudnessSquared));
+            DecibelSquaredText.text = "Decibels: " + db.ToString("F2");
+
+            LoudnessPosText.text = "Mic loudness (0 to 1): " + MicLoudnessPos.ToString("F3");
+            float db2 = 20 * Mathf.Log10(Mathf.Abs(MicInput.MicLoudnessPos));
+            DecibelPosText.text = "Decibels: " + db2.ToString("F2");
+
             levelTimer = levelTimerMax;
         }
     }
