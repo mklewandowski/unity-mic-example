@@ -20,6 +20,8 @@ public class MicInput : MonoBehaviour
     TextMeshProUGUI DecibelPosText;
     [SerializeField]
     TextMeshProUGUI DecibelSquaredText;
+    [SerializeField]
+    TextMeshProUGUI DecibelsText;
 
     float levelTimer = 0;
     float levelTimerMax = .1f;
@@ -76,8 +78,8 @@ public class MicInput : MonoBehaviour
         }
         MicLoudnessSquared = levelMaxSq;
         MicLoudnessPos = levelMaxPos;
-        Debug.Log("levelMaxSq: " + levelMaxSq.ToString("F2"));
-        Debug.Log("levelMaxPos: " + levelMaxPos.ToString("F2"));
+        // Debug.Log("levelMaxSq: " + levelMaxSq.ToString("F2"));
+        // Debug.Log("levelMaxPos: " + levelMaxPos.ToString("F2"));
     }
 
     void Update()
@@ -88,13 +90,16 @@ public class MicInput : MonoBehaviour
         levelTimer -= Time.deltaTime;
         if (levelTimer <= 0)
         {
-            LoudnessSquaredText.text = "Mic loudness (0 to 1): " + MicLoudnessSquared.ToString("F3");
+            LoudnessSquaredText.text = "Mic loudness (0 to 1): " + MicLoudnessSquared.ToString("F4");
             float db = 20 * Mathf.Log10(Mathf.Abs(MicInput.MicLoudnessSquared));
-            DecibelSquaredText.text = "Decibels: " + db.ToString("F2");
+            DecibelSquaredText.text = "Decibels (dBFS): " + db.ToString("F2");
 
-            LoudnessPosText.text = "Mic loudness (0 to 1): " + MicLoudnessPos.ToString("F3");
+            LoudnessPosText.text = "Mic loudness (0 to 1): " + MicLoudnessPos.ToString("F4");
             float db2 = 20 * Mathf.Log10(Mathf.Abs(MicInput.MicLoudnessPos));
-            DecibelPosText.text = "Decibels: " + db2.ToString("F2");
+            DecibelPosText.text = "Decibels (dBFS): " + db2.ToString("F2");
+
+            float dbStandard = 96f - Mathf.Abs(10f * Mathf.Log10(Mathf.Abs(MicInput.MicLoudnessPos)));
+            DecibelsText.text = "Decibels estimate: " + dbStandard.ToString("F2");
 
             levelTimer = levelTimerMax;
         }
