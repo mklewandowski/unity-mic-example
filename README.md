@@ -54,3 +54,19 @@ https://dsp.stackexchange.com/questions/69668/whats-the-minimum-decibel-value
 
 Example project:
 https://github.com/devSoyoung/unity-decibel-checker
+
+Decibel overview:
+https://www.commodious.co.uk/knowledge-bank/noise/measuring-levels
+https://science.howstuffworks.com/question124.htm
+
+Analog vs. Digital:
+https://al-ba.com/wp2/understanding-digital-audio-levels-2/
+
+Conversion tool:
+http://www.playdotsound.com/portfolio-item/decibel-db-to-float-value-calculator-making-sense-of-linear-values-in-audio-tools/
+
+Technical discussion:
+https://answers.unity.com/questions/1395521/why-i-am-getting-negative-decibels-around-70db-whe.html
+
+Convert dBFS to real world:
+https://forum.juce.com/t/how-to-convert-decibels-dbfs-to-real-db-spl/36856
